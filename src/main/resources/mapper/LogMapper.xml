@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.notfound945.demo.dao.LogDao">
+    <resultMap id="BaseResultMap" type="cn.notfound945.demo.pojo.Log">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="userName" jdbcType="VARCHAR" />
+        <result column="action" property="action" jdbcType="VARCHAR" />
+        <result column="ip_adr" property="ipAddr" jdbcType="VARCHAR" />
+        <result column="dotime" property="doTime" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, username, action, ip_adr, dotime, remarks
+    </sql>
+
+    <select id="getAllLog" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select <include refid="Base_Column_List"/>
+        from bean_admin_logs
+    </select>
+
+    <select id="getLogById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List" />
+        from bean_admin_logs
+        where id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="getLogByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from bean_admin_logs
+        where username = #{username, jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteLogById" parameterType="java.lang.Integer" >
+        delete from bean_admin_logs
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+</mapper>
