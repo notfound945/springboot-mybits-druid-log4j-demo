@@ -8,18 +8,6 @@ public class Log {
     private String doTime;
     private String remarks;
 
-    public Log() {
-    }
-
-    public Log(int id, String userName, String action, String ipAddr, String doTime, String remarks) {
-        this.id = id;
-        this.userName = userName;
-        this.action = action;
-        this.ipAddr = ipAddr;
-        this.doTime = doTime;
-        this.remarks = remarks;
-    }
-
     public int getId() {
         return id;
     }
