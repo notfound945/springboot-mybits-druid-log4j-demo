@@ -1,4 +1,4 @@
-# 小白视角：整合 SpringBoot + MyBatis + Druid + log4j
+# 整合 SpringBoot + MyBatis + Druid + log4j
 
 
 
@@ -48,8 +48,6 @@
 
   + 视情况而定添加相关数据库类型的连接驱动，连接池如使用其它请添加对应的依赖，但不要忘记修改application.yml中 spring.datasource.type ；
 
-  + Spring-jdbc一定要添加的，对数据库操作都经过JDBC的；
-
   + Spring-mybatis可替换其它框架；
 
   + log4j 视情况而定。
@@ -67,13 +65,6 @@
               <groupId>com.alibaba</groupId>
               <artifactId>druid</artifactId>
               <version>1.2.3</version>
-          </dependency>
-  
-  <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
-          <dependency>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-starter-jdbc</artifactId>
-              <version>2.3.5.RELEASE</version>
           </dependency>
   
   <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
