@@ -9,7 +9,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public class RootController {
      * 未登录返回
      * @return 响应
      */
-    @RequestMapping(value = "/noLogin")
+    @GetMapping(value = "/noLogin")
     public ResponseMsg responseNoLogin() {
         String generatedString = RandomStringUtils.random(8, true, true);
         ResponseMsg responseMsg = new ResponseMsg(401, "No login", "", "Login", "");
@@ -34,7 +35,7 @@ public class RootController {
      * 未得到授权
      * @return 响应
      */
-    @RequestMapping(value = "/noAuth")
+    @GetMapping(value = "/noAuth")
     public ResponseMsg responseMsg() {
         String generatedString = RandomStringUtils.random(8, true, true);
         ResponseMsg responseMsg = new ResponseMsg(401, "No authorization", "", "Authorization", "Authorization");
@@ -42,13 +43,12 @@ public class RootController {
         return responseMsg;
     }
 
-
     /**
      * 用户登录接口
      * @param request 请求参数
      * @return 响应
      */
-    @RequestMapping(value = "/login")
+    @PostMapping(value = "/login")
     public ResponseMsg responseLogin(HttpServletRequest request) {
         String generatedString = RandomStringUtils.random(8, true, true);
         try {

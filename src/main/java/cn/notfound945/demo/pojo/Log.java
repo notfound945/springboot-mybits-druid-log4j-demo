@@ -1,5 +1,8 @@
 package cn.notfound945.demo.pojo;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel("日志类")
 public class Log {
     private int id;
     private String userName;

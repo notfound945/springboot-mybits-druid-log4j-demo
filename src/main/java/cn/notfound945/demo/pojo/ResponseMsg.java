@@ -1,8 +1,11 @@
 package cn.notfound945.demo.pojo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@ApiModel("响应消息类")
 public class ResponseMsg {
     private int requestCode;
     private String requestStatus;

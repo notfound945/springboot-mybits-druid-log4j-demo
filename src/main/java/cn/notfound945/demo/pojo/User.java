@@ -1,5 +1,8 @@
 package cn.notfound945.demo.pojo;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel("用户类")
 public class User {
     private int id;
     private String userName;
