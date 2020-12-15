@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -21,6 +22,7 @@ import java.io.InputStreamReader;
 public class RootController {
     /**
      * 未登录返回
+     *
      * @return 响应
      */
     @GetMapping(value = "/noLogin")
@@ -33,6 +35,7 @@ public class RootController {
 
     /**
      * 未得到授权
+     *
      * @return 响应
      */
     @GetMapping(value = "/noAuth")
@@ -45,15 +48,24 @@ public class RootController {
 
     /**
      * 用户登录接口
+     *
      * @param request 请求参数
      * @return 响应
      */
     @PostMapping(value = "/login")
     public ResponseMsg responseLogin(HttpServletRequest request) {
         String generatedString = RandomStringUtils.random(8, true, true);
+        ResponseMsg responseMsg = new ResponseMsg(200, "login", "", "Login", "");
+        responseMsg.setRequestId(generatedString);
         try {
             JSONObject jsonParam = this.getJSONParam(request);
 //            去除两端空格字符
+            String validate = jsonParam.get("validate").toString().trim();
+            if (!validate.equals(request.getSession().getAttribute("sessionKey"))) {
+                responseMsg.setRequestCode(403);
+                responseMsg.setResponseRemark("验证码不匹配!");
+                return responseMsg;
+            }
             String username = jsonParam.get("username").toString().trim();
             String password = jsonParam.get("password").toString().trim();
 //            使用盐值加密
@@ -61,10 +73,9 @@ public class RootController {
 //            取得 Subject 对象
             Subject subject = SecurityUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(username, encodePassword);
-            ResponseMsg responseMsg = new ResponseMsg(200, "login", "", "Login", "");
-            responseMsg.setRequestId(generatedString);
             try {
                 subject.login(token);
+                responseMsg.setRequestCode(200);
                 responseMsg.setRequestStatus("login success");
                 responseMsg.setResponseRemark("登录成功");
                 return responseMsg;
@@ -74,15 +85,17 @@ public class RootController {
                 responseMsg.setRequestCode(401);
                 return responseMsg;
             }
-        } catch(Exception e) {
-            ResponseMsg responseMsg = new ResponseMsg(401, "No login", "", "Login", "");
-            responseMsg.setRequestId(generatedString);
+        } catch (Exception e) {
+            responseMsg.setRequestCode(401);
+            responseMsg.setRequestStatus("No login");
+            responseMsg.setResponseRemark("异常的登陆");
             return responseMsg;
         }
     }
 
     /**
      * 取出请求参数中的 json 数据
+     *
      * @param request 请求
      * @return json 字符串
      */
