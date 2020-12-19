@@ -1,11 +1,13 @@
 package cn.notfound945.demo.pojo;
 
 import io.swagger.annotations.ApiModel;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -83,7 +85,8 @@ public class ValidateCode {
      *  生成随机图片
      */
     public void getRandomCodeImage(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
         // BufferedImage类是具有缓冲区的Image类,Image类是用于描述图像信息的类
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_BGR);
         Graphics g = image.getGraphics();
@@ -101,8 +104,10 @@ public class ValidateCode {
         for (int i = 0; i < stringNum; i++) {
             randomString = drawString(g, randomString, i);
         }
-        System.out.println("Session Key: " + randomString);
+//        保存 Session Key 到 Shiro session 会话中
+        System.out.println("Shiro Session Key: " + randomString);
         g.dispose();
+
         session.removeAttribute(sessionKey);
         session.setAttribute(sessionKey, randomString);
         try {

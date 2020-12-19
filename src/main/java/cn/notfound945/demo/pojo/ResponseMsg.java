@@ -1,6 +1,9 @@
 package cn.notfound945.demo.pojo;
 
 import io.swagger.annotations.ApiModel;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,14 +18,25 @@ public class ResponseMsg {
     private String requestAction;
     private String responseRemark;
 
-    public ResponseMsg(int requestCode, String requestStatus, String requestUser, String requestAction, String responseRemark) {
+    public ResponseMsg(int requestCode, String requestStatus, String requestAction, String responseRemark) {
+        String generatedString = RandomStringUtils.random(8, true, true);
         Date originDate = new Date();
         SimpleDateFormat time = new SimpleDateFormat("HH:MM:ss");
         String timeStr = time.format(originDate);
 
         this.requestCode = requestCode;
         this.requestStatus = requestStatus;
-        this.requestUser = requestUser;
+        this.requestId = generatedString;
+        this.requestUser = "unknown";
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            User user = (User) subject.getPrincipal();
+            if (user != null) {
+                this.requestUser = user.getUserName();
+            }
+        } catch (Exception e) {
+            System.out.println("无会话内容");
+        }
         this.requestAction = requestAction;
         this.responseRemark = responseRemark;
         this.requestTime = timeStr;
@@ -86,4 +100,16 @@ public class ResponseMsg {
         this.responseRemark = responseRemark;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "requestCode:" + requestCode +
+                ", requestStatus:'" + requestStatus + '\'' +
+                ", requestId:'" + requestId + '\'' +
+                ", requestTime:'" + requestTime + '\'' +
+                ", requestUser:'" + requestUser + '\'' +
+                ", requestAction:'" + requestAction + '\'' +
+                ", responseRemark:'" + responseRemark + '\'' +
+                '}';
+    }
 }
