@@ -1,5 +1,8 @@
 package cn.notfound945.demo.pojo;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel("日志类")
 public class Log {
     private int id;
     private String userName;
@@ -7,18 +10,6 @@ public class Log {
     private String ipAddr;
     private String doTime;
     private String remarks;
-
-    public Log() {
-    }
-
-    public Log(int id, String userName, String action, String ipAddr, String doTime, String remarks) {
-        this.id = id;
-        this.userName = userName;
-        this.action = action;
-        this.ipAddr = ipAddr;
-        this.doTime = doTime;
-        this.remarks = remarks;
-    }
 
     public int getId() {
         return id;

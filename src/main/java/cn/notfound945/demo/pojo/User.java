@@ -1,8 +1,11 @@
 package cn.notfound945.demo.pojo;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel("用户类")
 public class User {
     private int id;
-    private String username;
+    private String userName;
     private String password;
     private String avatar;
     private String realName;
@@ -13,9 +16,9 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String password, String avatar, String realName, int authority, int groups, String registrationDate) {
+    public User(int id, String userName, String password, String avatar, String realName, int authority, int groups, String registrationDate) {
         this.id = id;
-        this.username = username;
+        this.userName = userName;
         this.password = password;
         this.avatar = avatar;
         this.realName = realName;
@@ -32,12 +35,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -92,7 +95,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", realName='" + realName + '\'' +

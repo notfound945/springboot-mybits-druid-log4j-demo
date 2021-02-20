@@ -44,7 +44,7 @@
 
 + **/pom.xml **
 
-  添加相关依赖： mysql连接驱动、Druid连接池、Spring-jdbc、Spring-mybatis、log4j
+  添加相关依赖： mysql连接驱动、Druid连接池、Spring-mybatis、log4j
 
   + 视情况而定添加相关数据库类型的连接驱动，连接池如使用其它请添加对应的依赖，但不要忘记修改application.yml中 spring.datasource.type ；
 
